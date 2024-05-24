@@ -1,15 +1,15 @@
-import {Product} from "../models/products.js"
+import {Message} from "../models/messages.js"
 
-export const uploadProduct = async(req, res)=>{
+export const sendMessage = async(req, res)=>{
     const {body} = req;
     try {
-       const product= await Product.create({
+       const message= await Message.create({
             ...body,
         })
        res.json({
         ok:true,
-        product, 
-        msg:"Producto creado satisfactoriamente"
+        message, 
+        msg:"Mensaje enviado satisfactoriamente"
     })
     } catch (error) {
         res.status(500)
@@ -20,19 +20,19 @@ export const uploadProduct = async(req, res)=>{
     }
 }
 
-export const listProducts = async (req, res) => {
+export const listMessages= async (req, res) => {
     const {page} = req.query
-    const docsPerPage = 3;
+    const docsPerPage = 2;
     const skip = (parseInt(page-1)) * docsPerPage
     try {
-        const products = await Product.find()
+        const messages = await Message.find()
             .skip(skip)
             .limit(docsPerPage)
-            .sort ({productName: 1})
+            .sort ({contactEmail: 1})
     
         res.json({
             ok: true,
-            products
+            messages
         })
         
     } catch (error) {
