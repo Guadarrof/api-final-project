@@ -2,34 +2,37 @@ import { Schema, model } from "mongoose";
 
 
 const productSchema = new Schema({
-    userName:{
+    productName:{
         type: String,
         unique: true,
         required: true
     },
-    email:{
-        type: String,
-        unique: true,
+    price:{
+        type: Number,
         required: true
     },
-    password:{
+    shortDescription:{
         type: String,
         required: true
     },
-    birthDate:{
-        type: Date
+    longDescription:{
+        type: String,
+        required: true
     },
-    userType:{
-        type: [String],
-        default:[]
+    img:{
+        type: String
     },
-    createdAt:{
-        type: Date,
+    category:{
+        type: String,
         required:true
     },
-    deletedAt:{
-        type: Date,
-        required:false
+    brand:{
+        type: String,
+        required:true
+    },
+    stock:{
+        type: Number,
+        required:true
     }
 })
 
