@@ -9,7 +9,7 @@ export const uploadProduct = async(req, res)=>{
        res.json({
         ok:true,
         product, 
-        msg:"Producto creado correctamente"
+        msg:"Producto creado satisfactoriamente"
     })
     } catch (error) {
         res.status(500)
@@ -26,7 +26,7 @@ export const listProducts = async (req, res) => {
     const skip = (parseInt(page-1)) * docsPerPage
     try {
         const products = await Product.find()
-            .select("-password -__v")
+            .select("-password -__v")  
             .skip(skip)
             .limit(docsPerPage)
             .sort ({productName: 1})
