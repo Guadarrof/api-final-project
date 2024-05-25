@@ -18,6 +18,6 @@ const messageSchema = new Schema({
         type: String,
         required: true
     }
-})
+} , {timestamps: true})
 
 export const Message = model("Message", messageSchema)
