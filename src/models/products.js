@@ -33,7 +33,14 @@ const productSchema = new Schema({
     stock:{
         type: Number,
         required:true
+    }, 
+    delivery:{
+        type: Boolean,
+        default: false
+    },
+    deletedAt:{
+        type: Date
     }
-})
+}, {timestamps: true})
 
 export const Product = model("Product", productSchema)
