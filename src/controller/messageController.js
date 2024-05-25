@@ -3,9 +3,7 @@ import {Message} from "../models/messages.js"
 export const sendMessage = async(req, res)=>{
     const {body} = req;
     try {
-       const message= await Message.create({
-            ...body,
-        })
+       const message= await Message.create({...body})
        res.json({
         ok:true,
         message, 

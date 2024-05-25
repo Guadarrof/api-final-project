@@ -10,10 +10,12 @@ route.post("/", [
             .isString()
             .isLength({min:2})
             .withMessage("Se debe ingresar un nombre"),
-        body("email")
+        body("contactEmail")
             .isEmail()
             .withMessage("Se debe ingresar un email"),
-        body("message")
+        body("contactSubject")
+            .isString(),
+        body("contactMessage")
             .isString()
             .isLength({min:1})
             .withMessage("Se debe ingresar un mensaje")
