@@ -4,7 +4,6 @@ import { Schema, model } from "mongoose";
 const productSchema = new Schema({
     productName:{
         type: String,
-        unique: true,
         required: true
     },
     price:{
@@ -20,7 +19,12 @@ const productSchema = new Schema({
         required: true
     },
     img:{
-        type: String
+        type: String,
+        required: true
+    },
+    imgAlt:{
+        type: String,
+        required: true
     },
     category:{
         type: String,

@@ -3,19 +3,19 @@ import {Product} from "../models/products.js"
 export const uploadProduct = async(req, res)=>{
     const {body} = req;
     try {
-       const product= await Product.create({
-            ...body,
-        })
+       const product= await Product.create({...body});
        res.json({
         ok:true,
         product, 
         msg:"Producto creado satisfactoriamente"
     })
     } catch (error) {
+        console.log("Error al crear el producto")
         res.status(500)
             .json({
                 ok:false,
-                msg:"Ha habido un error en el servidor"
+                msg:"Ha habido un error en el servidor",
+                error: error.message
             })
     }
 }
