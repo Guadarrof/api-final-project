@@ -13,7 +13,8 @@ export const sendMessage = async(req, res)=>{
         res.status(500)
             .json({
                 ok:false,
-                msg:"Ha habido un error en el servidor"
+                msg:"Ha habido un error en el servidor",
+                error: error.message
             })
     }
 }
