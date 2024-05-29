@@ -1,12 +1,13 @@
 import express from "express"
-import { uploadProduct} from "../controller/productController.js";
+import { uploadProduct, getProducts} from "../controller/productController.js";
 import { body } from "express-validator";
 import { validationErrorRes } from "../middleware/validations.js";
 import upload from "../libs/storage.js";
 
 const route = express.Router()
 
-route.post("/", 
+route
+    .post("/", 
         // [
         //     body("productName")
         //         .isString()
@@ -62,8 +63,8 @@ route.post("/",
         //         .withMessage("La fecha de eliminación debe ser una fecha válida"),
         //         validationErrorRes
         //     ],
-            upload.single("img"),
-            uploadProduct
-        )
+            upload.single("imgUrl"),
+            uploadProduct)
+    .get("/", getProducts)
      
 export default route;

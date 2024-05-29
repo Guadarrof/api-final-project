@@ -13,7 +13,7 @@ export const uploadProduct = async(req, res)=>{
         }
        const product= await Product.create({
         ...body,
-        img: `${process.env.BASE_URL}/public/${file.filename}`
+        imgUrl: `${process.env.BASE_URL}/public/${file.filename}`
     });
        if (!product){
             res.status(400)
@@ -39,26 +39,24 @@ export const uploadProduct = async(req, res)=>{
     }
 }
 
-export const listProducts = async (req, res) => {
-    const {page} = req.query
-    const docsPerPage = 3;
-    const skip = (parseInt(page-1)) * docsPerPage
+export const getProducts = async (req, res)=>{
     try {
-        const products = await Product.find()
-            .skip(skip)
-            .limit(docsPerPage)
-            .sort ({productName: 1})
-    
+        const uploadedProducts = await Product
+            .find()
+            // .sort({ productName: 1 });
+
         res.json({
-            ok: true,
-            products
+            ok:true,
+            uploadedProducts
         })
         
     } catch (error) {
+        console.log("Error al obtener los productos")
         res.status(500)
             .json({
                 ok:false,
-                msg:"Ha habido un error en el servidor"
+                msg:"Ha habido un error en el servidor",
+                error: error.message
             })
     }
 }
