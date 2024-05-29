@@ -1,9 +1,28 @@
 import {Product} from "../models/products.js"
 
 export const uploadProduct = async(req, res)=>{
-    const {body} = req;
+    const {body, file} = req;
     try {
-       const product= await Product.create({...body});
+        if (!file){
+            res.status(400)
+            .json({
+                ok:false,
+                msg:"La foto es requerida",
+                error: error.message
+            })
+        }
+       const product= await Product.create({
+        ...body,
+        img: `${process.env.BASE_URL}/public/${file.filename}`
+    });
+       if (!product){
+            res.status(400)
+                .json({
+                    ok:false,
+                    msg:"Error al crear el producto",
+                    error: error.message
+                })
+       }
        res.json({
         ok:true,
         product, 
