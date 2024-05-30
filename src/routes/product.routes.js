@@ -63,7 +63,7 @@ route
         //         .withMessage("La fecha de eliminación debe ser una fecha válida"),
         //         validationErrorRes
         //     ],
-            upload.single("imgUrl"),
+            upload.single("image"),
             uploadProduct)
     .get("/", getProducts)
      

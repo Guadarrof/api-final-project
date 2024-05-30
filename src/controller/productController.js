@@ -41,13 +41,13 @@ export const uploadProduct = async(req, res)=>{
 
 export const getProducts = async (req, res)=>{
     try {
-        const uploadedProducts = await Product
+        const products = await Product
             .find()
             // .sort({ productName: 1 });
 
         res.json({
             ok:true,
-            uploadedProducts
+            products
         })
         
     } catch (error) {
