@@ -22,10 +22,6 @@ const productSchema = new Schema({
         type: String,
         required: true
     },
-    imgAlt:{
-        type: String,
-        required: true
-    },
     category:{
         type: String,
         required:true

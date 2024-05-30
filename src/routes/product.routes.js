@@ -34,10 +34,6 @@ route
         //         .bail()
         //         .isLength({min: 50, max:300})
         //         .withMessage("La descripcion debe contener entre 50 y 300 caracteres"),
-        //     body("imgAlt")
-        //         .isString()
-        //         .isLength({min:1})
-        //         .withMessage("La imagen del producto requiere descripcion"),
         //     body("category")
         //         .isString()
         //         .isLength({min:1})
