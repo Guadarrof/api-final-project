@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 
 import messageRoutes from "./src/routes/messages.routes.js";
 import productRoutes from "./src/routes/product.routes.js";
+import imagesRoutes from "./src/routes/images.routes.js"
 
 import { dbConnection } from "./src/database/dbConnection.js";
 
@@ -22,6 +23,8 @@ const storeApi = async () => {
   server.use('/public', express.static(`./temp/imgs`))
 
   server.use("/api/products", productRoutes);
+
+  server.use("/images", imagesRoutes)
 
   server.use("/api/messages", messageRoutes);
 

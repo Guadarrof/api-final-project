@@ -1,4 +1,9 @@
-import {Product} from "../models/products.js"
+import fs from "fs";
+
+import {Product} from "../models/products.js";
+
+import { Images } from "../models/images.js";
+
 
 export const uploadProduct = async(req, res)=>{
     const {body, file} = req;
@@ -10,10 +15,38 @@ export const uploadProduct = async(req, res)=>{
                 msg:"La foto es requerida"
             });
         }
+
+        const imageBuffer= fs.readFileSync(`./temp/imgs/${file.filename}`)
+        
+        const image = await Images.create({
+            fileName:file.filename,
+            img:{
+                data: imageBuffer,
+                contentType: "image/png"
+            }
+        })
+
+        if (!image){
+            return res.status(400)
+             .json({
+                 ok:false,
+                 msg:"No se pudo guardar la imagen"
+             });
+         }
+        
        const product= await Product.create({
         ...body,
-        imgUrl: `${process.env.BASE_URL}/public/${file.filename}`
+        // imgUrl: `${process.env.BASE_URL}/public/${file.filename}`
+        imgUrl: `${process.env.BASE_URL}/images/${image._id}}`
     });
+
+        fs.rm(`./temp/imgs${file.fileName}`, error=>{
+            if (error){
+                console.log("No se ha podido eliminar el archivo")
+            }
+            console.log("El archivo ha sido eleminiado correctamente")
+        })
+
        if (!product){
             return res.status(400)
                 .json({
