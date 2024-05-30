@@ -71,9 +71,11 @@ export const uploadProduct = async(req, res)=>{
 }
 
 export const getProducts = async (req, res)=>{
+    const {search} = req.query;
     try {
+        const searchBy = search ? {productName: new RegExp(search, "i")} : undefined;
         const products = await Product
-            .find()
+            .find(searchBy)
             .sort({ productName: 1 });
 
         res.json({
