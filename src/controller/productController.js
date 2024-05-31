@@ -37,10 +37,10 @@ export const uploadProduct = async(req, res)=>{
        const product= await Product.create({
         ...body,
         // imgUrl: `${process.env.BASE_URL}/public/${file.filename}`
-        imgUrl: `${process.env.BASE_URL}/images/${image._id}}`
+        imgUrl: `${process.env.BASE_URL}/images/${image._id}`
     });
 
-        fs.rm(`./temp/imgs${file.fileName}`, error=>{
+        fs.rm(`./temp/imgs/${file.fileName}`, error=>{
             if (error){
                 console.log("No se ha podido eliminar el archivo")
             }
@@ -73,9 +73,9 @@ export const uploadProduct = async(req, res)=>{
 export const getProducts = async (req, res)=>{
     const {search} = req.query;
     try {
-        const searchBy = search ? {productName: new RegExp(search, "i")} : undefined;
+        const searchBy = search ? {productName: new RegExp(search, "i")} : {};
         const products = await Product
-            .find(searchBy)
+            .find({...searchBy, deletedAt: {$in: [null, undefined]}})
             .sort({ productName: 1 });
 
         res.json({
