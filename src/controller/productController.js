@@ -158,7 +158,7 @@ export const deleteProduct = async (req, res) => {
   const { id } = req.params;
   try {
         const product = await Product.findById(id);
-        if (!product){
+        if (!product || product.deletedAt){
             return res.status(404).json({
                 ok: false,
                 msg: "No se ha encontrado el producto",
