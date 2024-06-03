@@ -70,7 +70,7 @@ export const getProducts = async (req, res) => {
     const searchBy = search ? { productName: new RegExp(search, "i") } : {};
     const products = await Product.find({
       ...searchBy,
-      deletedAt: { $in: [null, undefined] },
+      deletedAt: { $in: [null, undefined]},
     }).sort({ productName: 1 });
 
     res.json({
@@ -94,13 +94,13 @@ export const editProduct = async (req, res) => {
   try {
     const product = await Product.findById(id);
 
-    if (!product) {
+    if (!product || product.deletedAt) {
       return res.status(404).json({
         ok: false,
         msg: "Producto no encontrado",
       });
     }
-    
+
     let imageUrl = product.imgUrl;
 
     if (file) {
@@ -146,6 +146,36 @@ export const editProduct = async (req, res) => {
     });
   } catch (error) {
     console.log("Error al editar el producto");
+    res.status(500).json({
+      ok: false,
+      msg: "Ha habido un error en el servidor",
+      error: error.message,
+    });
+  }
+};
+
+export const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  try {
+        const product = await Product.findById(id);
+        if (!product){
+            return res.status(404).json({
+                ok: false,
+                msg: "No se ha encontrado el producto",
+                error: error.message,
+              });
+
+        }
+
+        await Product.findByIdAndUpdate(id, {deletedAt: new Date()}, {new: true})
+
+        res.json({
+            ok: true,
+            msg: "El producto ha sido eliminado"
+        })
+
+  } catch (error) {
+    console.log("Error al eliminar el producto");
     res.status(500).json({
       ok: false,
       msg: "Ha habido un error en el servidor",
