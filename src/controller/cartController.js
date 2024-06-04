@@ -18,4 +18,40 @@ export const createCart = async (req, res) => {
     });
   }
 };
+
+export const editCart = async (req, res) =>{
+  const {id} = req.params;
+
+  try {
+    const cartFound = await Cart.findById(id);
+    if (!cartFound){
+      return res.status(400).json({
+        ok: false,
+        msg: "No se ha encontrado el producto"
+      })
+    }
+
+    console.log(req.body.items)
+    const newCart = await Cart.findByIdAndUpdate(id, req.body, {new:true})
+                              .populate({
+                                path: "items.product",
+                                model: "Product"
+                            });
+    console.log(newCart)
+
+    res.json({
+      ok:true,
+      cart: newCart,
+      msg: "El carrito ha sido actualizado"
+    })
+
+  } catch (error) {
+    console.log("Error al editar el carrito");
+    res.status(500).json({
+      ok: false,
+      msg: "Ha habido un error en el servidor",
+      error: error.message,
+    });
+  }
+}
  
