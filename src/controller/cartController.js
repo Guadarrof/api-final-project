@@ -52,4 +52,28 @@ export const editCart = async (req, res) =>{
     });
   }
 }
+
+export const getById = async (req, res)=>{
+  const {id} = req.params;
+  try {
+    const cart = await Cart.findById(id)
+                          .populate({
+                            path: "items.product",
+                            model: "Product"
+                        });
+
+    res.json({
+      ok:true,
+      cart
+    })
+
+  } catch (error) {
+    console.log("El carrito no existe");
+    res.status(500).json({
+      ok: false,
+      msg: "Ha habido un error en el servidor",
+      error: error.message,
+    });
+  }
+};
  
