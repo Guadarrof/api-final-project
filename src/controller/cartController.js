@@ -31,13 +31,11 @@ export const editCart = async (req, res) =>{
       })
     }
 
-    console.log(req.body.items)
     const newCart = await Cart.findByIdAndUpdate(id, req.body, {new:true})
                               .populate({
                                 path: "items.product",
                                 model: "Product"
                             });
-    console.log(newCart)
 
     res.json({
       ok:true,
