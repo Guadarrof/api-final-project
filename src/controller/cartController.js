@@ -2,10 +2,15 @@ import { Cart } from "../models/cart.js";
 
 export const createCart = async (req, res) => {
   try {
-    const newCart = await Cart.create(req.body);
+    const newCart = await Cart.create(req.body)
+    const cart = await Cart.findById(newCart._id)
+                                    .populate({
+                                      path: "items.product",
+                                      model: "Product"
+                                  });
     res.json({
         ok:true, 
-        cart: newCart
+        cart
     })
 
 
