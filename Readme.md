@@ -1,6 +1,6 @@
 ## Tecnologias usadas:
 
-La siguiente API fue desarrollada utilizando __nodeJS, Express y Mongo DB.__
+El siguiente proyecto fue desarrollado utilizando __nodeJS, Express y Mongo DB.__
 
 Las librerias utilizadas desde NPM fueron las siguientes:
 
